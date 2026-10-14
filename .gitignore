@@ -1,8 +1,14 @@
 /python/.venv/
 /python/__pycache__/
-/python/test.py
-/python/dataset/
+
 /python/test.py
 /python/dataset.zip
+
+/python/dataset/
 /python/models/
 /python/loss/
+
+
+!java/pom.xml
+!java/**/pom.xml
+!java/src/**
