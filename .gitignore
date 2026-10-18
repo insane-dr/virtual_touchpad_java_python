@@ -15,3 +15,5 @@
 !java/pom.xml
 !java/**/pom.xml
 !java/src/**
+
+/java/target/
