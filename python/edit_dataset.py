@@ -3,7 +3,7 @@ import read_dataset as rd
 
 path = rd.inicalisation()
 
-alph = 1
+alph = 0.2
 new_size = (160, 160)
 box_size = (80, 80)
 in_box_size = (100, 100)

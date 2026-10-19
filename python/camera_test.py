@@ -3,7 +3,7 @@ import time
 import keras as kr
 import numpy as np
 
-detector = kr.models.load_model("models/box_color_2.keras")
+detector = kr.models.load_model("models/auto_encoder_2.keras")
 
 # Открываем камеру (0 – первая доступная)
 cap = cv2.VideoCapture(0)
@@ -29,25 +29,21 @@ while True:
         break
     
 
-    # x = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    
     x = cv2.resize(img, (w, h))
+    x = cv2.cvtColor(x, cv2.COLOR_BGR2GRAY)
     
     x = x / 255
-    x = np.reshape(x, (1, w, h, 3))
-    maska = detector.predict(x, verbose=False)[0].reshape(w_box, h_box)
-    '''
-    for i in range(h_box):
-        for j in range(w_box):
-            maska[i][j] = round(maska[i][j])
-    '''
-    maska = cv2.resize(maska, (w, h))
-
-    ultra_maska = np.zeros_like(x[0])
-    for i in range(3):
-        ultra_maska[:, :, i] = maska
+    x = np.reshape(x, (1, w, h, 1))
+    maska = detector.predict(x, verbose=False)[0]
     
-    img_x = x[0] * ultra_maska
+    maska = np.round(maska)
+    
+    # maska = cv2.resize(maska, (w, h))
+    
+    #print(maska.shape, x[0].shape)
+    #exit()
+    img_x = x[0] * maska
+    
     img_x = cv2.resize(img_x, (640, 480))
     cv2.imshow('Webcam', img_x)
 

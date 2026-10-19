@@ -69,7 +69,7 @@ def y_give(folder: str, train_files:list, standart_size):
 
 
 def x_box_give(x_img: np.array, boxes, new_size):
-  x = np.zeros((len(x_img), new_size[0], new_size[1], 3))
+  x = np.zeros((len(x_img), new_size[0], new_size[1]))
 
   for i in range(len(x_img)):
       img = x_img[i].copy()
@@ -86,7 +86,7 @@ def x_box_give(x_img: np.array, boxes, new_size):
       x2 = min(x_box + w, new_size[0] - 1)
       y2 = min(y_box + h, new_size[0] - 1)
 
-      img = img[y1: y2, x1: x2, :]
+      img = img[y1: y2, x1: x2]
 
       img = cv2.resize(img, new_size)
 
@@ -96,7 +96,7 @@ def x_box_give(x_img: np.array, boxes, new_size):
   return x
 
 def x_give(folder: str, train_files, none, new_size):
-  x = np.zeros((len(train_files) - len(none), new_size[0], new_size[1], 3))
+  x = np.zeros((len(train_files) - len(none), new_size[0], new_size[1]))
   true_i = -1
 
   for i in range(len(train_files)):
@@ -107,6 +107,7 @@ def x_give(folder: str, train_files, none, new_size):
 
       img = cv2.imread(f"{folder}/{train_files[i]}.jpg")
 
+      img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
       img = cv2.resize(img, new_size)
 
       x[true_i] = img.copy()
